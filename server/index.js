@@ -8,7 +8,7 @@ const http = require("http");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { Server } = require("socket.io");
-const Message = require("./Message");
+const Message = require("./models/Message");
 
 const app = express();
 app.use(cors());
