@@ -1,15 +1,15 @@
 // server/server.js
+require("dotenv").config();
+const express = require("express");
+const http = require("http");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const { Server } = require("socket.io");
+const Message = require("./models/Message");
 
-require('dotenv').config();
-import Message, { find } from "./models/Message";
-console.log('🔍 Mongo URI:', process.env.MONGO_URI); // Debug log
+console.log("🔍 Mongo URI:", process.env.MONGO_URI);
 
-import express from "express";
-import { createServer } from "http";
-import cors from "cors";
-import { connect } from "mongoose";
-import { Server } from "socket.io";
-import Message from "./models/Message";
+// Continue with your server setup...
 
 const app = express();
 app.use(cors());
