@@ -1,19 +1,20 @@
 // server/server.js
 
 require('dotenv').config();
+import Message, { find } from "./models/Message";
 console.log('🔍 Mongo URI:', process.env.MONGO_URI); // Debug log
 
-const express = require("express");
-const http = require("http");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const { Server } = require("socket.io");
-const Message = require("./models/Message");
+import express from "express";
+import { createServer } from "http";
+import cors from "cors";
+import { connect } from "mongoose";
+import { Server } from "socket.io";
+import Message from "./models/Message";
 
 const app = express();
 app.use(cors());
 
-const server = http.createServer(app);
+const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
@@ -23,7 +24,7 @@ const io = new Server(server, {
 });
 
 // 💾 MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
+connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log("✅ MongoDB connected"))
@@ -34,7 +35,7 @@ io.on("connection", (socket) => {
   console.log("✅ User connected:", socket.id);
 
   // 1️⃣ Send all previous messages
-  Message.find({})
+  find({})
     .then(messages => {
       socket.emit("previous_messages", messages);
     })
